@@ -12,7 +12,7 @@ struct Student{
   char* fname;
   char* lname;
   int id;
-  double gpa;
+  float gpa;
 };
   
 int main() {
@@ -21,6 +21,9 @@ int main() {
   char* id = new char[7];
   char* gpa = new char[10];
   char* keyword = new char[10];
+
+  Student* student = new Student();
+  
   bool stillPlaying = true;
   while(stillPlaying == true){
   cout << "Type in a keyword (\"ADD\", \"PRINT\",\"DELETE\", or \"QUIT\")"<<endl;
@@ -30,6 +33,7 @@ int main() {
   if (strcmp(keyword, "ADD") == 0){
     //insert addStudent method
     addStudent();
+    vector
   }
   else if (strcmp(keyword, "PRINT") == 0){
     //insert printStudent method
@@ -88,18 +92,18 @@ void addStudent(){
   student -> gpa = gpa;
 }
 
- double charArrToNum(char* arr){
-   double numId = 0;
+ float charArrToNum(char* arr){
+   float numId = 0;
    for (int i = 0; i != 0; i++){
      numId = (arr[i] - '0') + (numId * 10);
    }
    return numId;
  }
  
- void printStudent(char* fname, char* lname, int id, double gpa){
+void printStudent(char* fname, char* lname, int id, float gpa) {
    Student student;
-   cout << student -> fname << "ID: " << student -> id << "GPA: ";
-   cout << student -> gpa << endl;
+   cout << student -> fname << "ID: " << student.id << "GPA: ";
+   cout << student.gpa << endl;
 }
 
 void deleteStudent(){
