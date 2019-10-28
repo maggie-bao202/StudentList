@@ -33,7 +33,6 @@ int main() {
   if (strcmp(keyword, "ADD") == 0){
     //insert addStudent method
     addStudent();
-    vector
   }
   else if (strcmp(keyword, "PRINT") == 0){
     //insert printStudent method
@@ -56,52 +55,37 @@ int main() {
 
 void addStudent(){
   Student* student = new Student();
-  char* fname = new char[20];
-  char* lname = new char[20];
-  char* id = new char[7];
-  char* gpa = new char[10];
-  double numId = 0;
+  char id  = new char[7];
+  char gpa = new char[4];
+  float numId = 0;
   cout << "Enter the first name:" << endl;
-  cin.get(fname, 20);
-  cin.clear();
-  cin.ignore(9999, '\n');
-  student -> fname = fname;
+  cin << student -> fname;
   cout << "Enter the last name:" << endl;
-  cin.get(lname, 20);
-  cin.clear();
-  cin.ignore(9999, '\n');
-  student -> lname = lname;
+  cin << student -> lname;
   cout << "Enter the Student Id:" << endl;
-  cin.get(id, 7);
-  cin.clear();
-  cin.ignore(9999, '\n');
-  charArrToNum(id);
-  while (numId > 999999 || numId < 1000000){
-    cout << "Enter a 6 digit number." << endl;
+  cin << student -> id;
+  while (strlen(id) != 7){
+     cout << "Enter a 6 digit number." << endl;
+    cin << student -> id;
   }
-  student -> id = numId;
   cout << "Enter the GPA:" << endl;
-  cin.get(gpa, 10);
-  cin.clear();
-  cin.ignore(9999, '\n');
-  charArrToNum(gpa);
-  int truncate = gpa[4];
-  if(truncate > 5){
-    gpa[3] = gpa[3] + 1; //char to double, add 0.005
+  cin << student -> gpa;
+  numId = charArrToNum(* gpa);
+  while (strlen(gpa) != 4){
+    cout << "Enter your GPA rounded to the nearest hundredth." << endl;
   }
-  student -> gpa = gpa;
 }
 
- float charArrToNum(char* arr){
+float charArrToNum(char* arr){
    float numId = 0;
-   for (int i = 0; i != 0; i++){
-     numId = (arr[i] - '0') + (numId * 10);
+   for (int i = 0; i < strlen(arr); i++){
+     numId += pow(10, 6-i)*(arr[i] - '0');
    }
    return numId;
- }
+}
  
 void printStudent(char* fname, char* lname, int id, float gpa) {
-   Student student;
+   Student* student;
    cout << student -> fname << "ID: " << student.id << "GPA: ";
    cout << student.gpa << endl;
 }
