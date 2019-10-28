@@ -55,25 +55,26 @@ int main() {
 
 void addStudent(){
   Student* student = new Student();
-  char id  = new char[7];
-  char gpa = new char[4];
-  float numId = 0;
+  char* id  = new char[999];
+  int numId = 0;
+  float gpa = 0.0;
   cout << "Enter the first name:" << endl;
   cin << student -> fname;
   cout << "Enter the last name:" << endl;
   cin << student -> lname;
   cout << "Enter the Student Id:" << endl;
-  cin << student -> id;
-  while (strlen(id) != 7){
+  cin << student -> numId;
+  /*while (strlen(id) != 7){
      cout << "Enter a 6 digit number." << endl;
     cin << student -> id;
-  }
+    }*/
   cout << "Enter the GPA:" << endl;
   cin << student -> gpa;
   numId = charArrToNum(* gpa);
-  while (strlen(gpa) != 4){
+  /*while (strlen(gpa) != 4){
     cout << "Enter your GPA rounded to the nearest hundredth." << endl;
-  }
+    }*/
+  
 }
 
 float charArrToNum(char* arr){
