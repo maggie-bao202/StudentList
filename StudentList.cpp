@@ -5,7 +5,9 @@
 #include<iomanip>
 using namespace std;
 
-struct Student{
+/*Date: 10/30/19 Author: Maggie Bao. Description: Student List allows the user to input information about a student from inputting "ADD". The student is added to a list, which can be viewed by the "PRINT" command. The user can delete students by the "DELETE" command, typing in the first name of the student. Finally, the user could exit out of the program with the "QUIT" command.*/
+
+struct Student{//student structure
   char fname[40];
   char lname[40];
   int id;
@@ -14,34 +16,28 @@ struct Student{
 
 void addStudent(vector<Student*>*);
 void printStudent(vector<Student*>*);
-void deleteStudent();
-//double charArrToNum(char*);
+void deleteStudent(vector<Student*>*);
   
 int main() {
-
+  //initialize vector pointer, keyword, and student struct
   vector<Student*> studentList;
-  
   char* keyword = new char[10];
-
   Student* student = new Student();
   
-  bool stillPlaying = true;
+  bool stillPlaying = true;//will continue prompting for keyword until quit
   while(stillPlaying == true){
     cout << "Type in a keyword (\"ADD\", \"PRINT\",\"DELETE\", or \"QUIT\")"<<endl;
     cin.get(keyword, 10); //put into array of 10. Extra char will be ignored
     cin.clear(); //clear, ignore fixes null bug
     cin.ignore(9999, '\n');
-    if (strcmp(keyword, "ADD") == 0){
-      //insert addStudent method
+    if (strcmp(keyword, "ADD") == 0){//if keyword char pointer matches with str
       addStudent(&studentList);
     }
     else if (strcmp(keyword, "PRINT") == 0){
-      //insert printStudent method
       printStudent(&studentList);
     }
     else if (strcmp(keyword, "DELETE") == 0){
-      //insert deleteStudent method
-      deleteStudent();
+      deleteStudent(&studentList);
     }
     else if(strcmp(keyword, "QUIT") == 0){
       cout << "Have a nice day!" << endl;
@@ -55,58 +51,64 @@ int main() {
   return 0;
 }
 
-void addStudent(vector<Student*>* studentList){
+void addStudent(vector<Student*>* studentList){ //prompts for user to input information about a student, then stores data inside the struct, adds to the vector
   Student* student = new Student();
   int iid = 0;
   float igpa = 0.0;
   cout << "Enter the first name: ";
-  cin >> student->fname;
+  cin >> student->fname;//stores input inside fname in struct pointer
   cout << "Enter the last name: ";
   cin >> student->lname;
-  cout << "Enter the Student Id: ";
-  cin >> iid;
-  while (iid > 999999 || iid < 100000){
+  cout << "Enter the Student ID: ";
+  cin >> iid; //reads in int inputid
+  while (iid > 999999 || iid < 100000){//if out of id range
     cout << "Enter a 6 digit number." << endl;
-    cout << "Enter the Student Id: ";
-    cin >> iid;
+    cout << "Enter the Student ID: ";
+    cin >> iid;//take input again
   }
-  student->id = iid;
+  student->id = iid;//read into struct student
   cout << "Enter the GPA: ";
-  cin >> igpa;
-  while (igpa > 5.0 || igpa < 0.0){
-    cout << "GPA must be less than 5.00 and greater than 0.00.";
+  cin >> igpa; 
+  while (igpa > 5.0 || igpa <= 0.0){//if gpa is greater than 5 and not 0
+    cout << "GPA cannot exceed a 5.00, and cannot be 0.00." << endl;
     cout << "Enter the GPA: ";
     cin >> igpa;
   }
   student->gpa = igpa;
-  cin.clear();
+  cin.clear();//debugging, so it doesn't print header twice
   cin.ignore(999, '\n');
-  studentList->push_back(student);
+  studentList->push_back(student);//add to vector
+  cout << "Student added." << endl;
 }
  
-void printStudent(vector<Student*>* studentList) {
-   vector<Student*>::iterator it;
-   for(it = studentList->begin(); it != studentList->end(); it++){
-     cout << (*it)->fname << " ";
+void printStudent(vector<Student*>* studentList) {//instead of a forloop with variable i, vectors use iterators
+  cout << "List of Students:" << endl;
+  vector<Student*>::iterator it; //create iterator
+  for(it = studentList->begin(); it != studentList->end(); it++){// goes through each element of the vector
+    cout << (*it)->fname << " ";//for each iteration print out elements of struct
      cout << (*it)->lname << ", ";
-     cout << fixed<<setprecision(2);
-     cout << (*it) ->id << ", ";
+     cout << (*it) -> id << ", ";
+     cout << fixed<<setprecision(2);//round to nearest hundreth for the gpa
      cout << (*it)->gpa << endl;
 
    }
 }
 
-void deleteStudent(vector<Student*>* studentList){
+void deleteStudent(vector<Student*>* studentList){//if name matches user input in iteration, then delete element
   vector<Student*>::iterator it;
-  char ifname[40];
   cout << "Enter the first name of a student to remove: ";
-  cin.get(ifname,40);
-  cin.get();
-  for(it = studentList->begin(); it != studentList->end(); it++){
-    if (strcmp((*it)->fname, ifname) == 0){
-      delete(*it);
-      studentList -> erase(it);
+  char ifname[40];
+  cin >> ifname;//take user input
+  int counter = 0;
+  for(it = studentList->begin(); it != studentList->end(); it++){//same as print
+    if (strcmp((*it)->fname, ifname) == 0){//if two char arrays are the same
+      delete(*it);//delete memory
+      studentList -> erase(it);//remove from it
+      counter++;//add 1
+      cout << "Student removed." << endl;
     }
   }
-  
+  if (counter == 0){//if counter did not iterate
+    cout << "Not a valid student." << endl;
+  }
 }
