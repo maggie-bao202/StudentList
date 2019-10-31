@@ -5,7 +5,7 @@
 #include<iomanip>
 using namespace std;
 
-/*Date: 10/30/19 Author: Maggie Bao. Description: Student List allows the user to input information about a student from inputting "ADD". The student is added to a list, which can be viewed by the "PRINT" command. The user can delete students by the "DELETE" command, typing in the first name of the student. Finally, the user could exit out of the program with the "QUIT" command.*/
+/*Date: 10/30/19 Author: Maggie Bao. Description: Student List allows the user to input information about a student from inputting "ADD". The student is added to a list, which can be viewed by the "PRINT" command. The user can delete students by the "DELETE" command, typing in the Student ID of the student. Finally, the user could exit out of the program with the "QUIT" command.*/
 
 struct Student{//student structure
   char fname[40];
@@ -78,11 +78,11 @@ void addStudent(vector<Student*>* studentList){ //prompts for user to input info
   cin.clear();//debugging, so it doesn't print header twice
   cin.ignore(999, '\n');
   studentList->push_back(student);//add to vector
-  cout << "Student added." << endl;
+  cout << "Student added." << endl << endl;
 }
  
 void printStudent(vector<Student*>* studentList) {//instead of a forloop with variable i, vectors use iterators
-  cout << "List of Students:" << endl;
+  cout << "List of Students:" << endl << endl;
   vector<Student*>::iterator it; //create iterator
   for(it = studentList->begin(); it != studentList->end(); it++){// goes through each element of the vector
     cout << (*it)->fname << " ";//for each iteration print out elements of struct
@@ -92,23 +92,27 @@ void printStudent(vector<Student*>* studentList) {//instead of a forloop with va
      cout << (*it)->gpa << endl;
 
    }
+  cout << endl;
 }
 
 void deleteStudent(vector<Student*>* studentList){//if name matches user input in iteration, then delete element
   vector<Student*>::iterator it;
-  cout << "Enter the first name of a student to remove: ";
-  char ifname[40];
-  cin >> ifname;//take user input
+  cout << "Enter the Student ID of the student to remove: ";
+  int iid;
+  cin >> iid;//take user input
   int counter = 0;
   for(it = studentList->begin(); it != studentList->end(); it++){//same as print
-    if (strcmp((*it)->fname, ifname) == 0){//if two char arrays are the same
-      delete(*it);//delete memory
-      studentList -> erase(it);//remove from it
+    if ((*it)->id == iid){//if ints are the same
+      delete *it;//delete memory
+      studentList->erase(it);//remove from it
       counter++;//add 1
-      cout << "Student removed." << endl;
+      cout << "Student removed." << endl << endl;
+      break;
     }
   }
   if (counter == 0){//if counter did not iterate
-    cout << "Not a valid student." << endl;
+    cout << "Not a valid student." << endl << endl;
   }
+  cin.clear();//debugging to make header not print twice
+  cin.ignore(999,'\n');
 }
